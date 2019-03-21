@@ -1,28 +1,24 @@
 package ar.com.wolox.challengecosta.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "foto")
-public class Foto {
+@Table(name = "photo")
+public class Photo {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	private String titulo;
+	@JsonProperty("title")
+	private String title;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "album_id")
-	private Album album;
+	@JsonProperty("albumId")
+	private Long albumId;
 	
 	@NotBlank
 	private String url;
@@ -38,20 +34,20 @@ public class Foto {
 		this.id = id;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Album getAlbum() {
-		return album;
+	public Long getAlbumId() {
+		return albumId;
 	}
 
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setAlbumId(Long albumId) {
+		this.albumId = albumId;
 	}
 
 	public String getUrl() {

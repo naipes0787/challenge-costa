@@ -1,43 +1,30 @@
 package ar.com.wolox.challengecosta.model;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "album")
 public class Album {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	private String titulo;
+	@JsonProperty("title")
+	private String title;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
-	private Usuario propietario;
-	
-	@OneToMany(
-		mappedBy = "album",
-		cascade = CascadeType.ALL,
-		orphanRemoval = true
-	)
-	private List<Foto> fotos = new ArrayList<>();
+	@JsonProperty("userId")
+	private Long userId;
 	
 	@OneToMany(mappedBy = "album")
-	Set<AlbumUsuario> albumCompartido;
+	private
+	List<AlbumUser> sharedAlbum;
 
 	public Long getId() {
 		return id;
@@ -47,20 +34,28 @@ public class Album {
 		this.id = id;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Usuario getPropietario() {
-		return propietario;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setPropietario(Usuario propietario) {
-		this.propietario = propietario;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public List<AlbumUser> getSharedAlbum() {
+		return sharedAlbum;
+	}
+
+	public void setSharedAlbum(List<AlbumUser> sharedAlbum) {
+		this.sharedAlbum = sharedAlbum;
 	}
 
 }

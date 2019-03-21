@@ -12,41 +12,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import ar.com.wolox.challengecosta.model.Album;
+import ar.com.wolox.challengecosta.model.User;
 import ar.com.wolox.challengecosta.service.AlbumServiceImpl;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
 @RequestMapping("/")
-public class AlbumController {
+public class UserController {
 
 	@Autowired
 	AlbumServiceImpl albumService;
-
+    
 	/**
-	 * Obtener todos los álbumes del sistema
-	 * @return List<Album>
+	 * Obtener todos los usuarios del sistema
+	 * @return List<User>
 	 */
-	@GetMapping("/albums")
-	public List<Album> getAllAlbums() {
+	@GetMapping("/users")
+	public List<User> getAllUsers() {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<Album>> response = restTemplate.exchange(
-				Constants.REST_ALBUMS_URL, HttpMethod.GET, null,
-		  new ParameterizedTypeReference<List<Album>>(){});
-		List<Album> albums = response.getBody();
-		return albums;
+		ResponseEntity<List<User>> response = restTemplate.exchange(
+				Constants.REST_USERS_URL, HttpMethod.GET, null,
+		  new ParameterizedTypeReference<List<User>>(){});
+		List<User> users = response.getBody();
+		return users;
 	}
     
 	/**
-	 * Obtener el álbum solicitado según el id pasado por parámetro
-	 * @return {@link Album}
+	 * Obtener el usuario solicitado según el id pasado por parámetro
+	 * @return {@link User}
 	 */
-	@GetMapping("/albums/{id}")
-	public Album getAlbumById(@PathVariable(value = "id") Long albumId) {
+	@GetMapping("/users/{id}")
+	public User getUserById(@PathVariable(value = "id") Long userId) {
 		RestTemplate restTemplate = new RestTemplate();
-		Album album = restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
-				albumId.toString()), Album.class);
-		return album;
+		User user = restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
+				userId.toString()), User.class);
+		return user;
 	}
 
 }

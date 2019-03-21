@@ -8,14 +8,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "tipo_permiso")
-public class TipoPermiso {
+@Table(name = "access_type")
+public class AccessType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	private String denominacion;
+	private String label;
 
 	public Long getId() {
 		return id;
@@ -25,12 +25,12 @@ public class TipoPermiso {
 		this.id = id;
 	}
 
-	public String getDenominacion() {
-		return denominacion;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setDenominacion(String denominacion) {
-		this.denominacion = denominacion;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }
