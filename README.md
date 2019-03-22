@@ -1,5 +1,6 @@
-#Wolox Challenge
-######Desarrollado por Leandro Costa
+# Wolox Challenge
+
+###### Desarrollado por Leandro Costa
 
 
 ___
@@ -19,7 +20,8 @@ ___
 
 
 ___
-Para iniciar la aplicación ejecutar en el directorio raíz: _mvn spring-boot:run_
+**Iniciar aplicación**
+Para iniciar ejecutar en el directorio raíz: _mvn spring-boot:run_
 
 
 ___
