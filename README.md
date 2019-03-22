@@ -45,7 +45,7 @@ Para cada una de ellas, si desea obtenerse información de sólo un registro pod
 localhost:8080/api/users/3
 
 **Otras funcionalidades:**
-- Obtener las fotos del determinado usuario 3: GET _localhost:8080/api/photosByUserId?userId=3_
+- Obtener las fotos del usuario 3: GET _localhost:8080/api/photosByUserId?userId=3_
 - Obtener los comentarios con el name 'id labore ex et quam laborum':
 GET _localhost:8080/api/filterComments?name=id%20labore%20ex%20et%20quam%20laborum_
 - Obtener los comentarios del usuario 3: GET _localhost:8080/api/filterComments?userId=3_
