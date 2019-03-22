@@ -21,10 +21,12 @@ ___
 
 ___
 **Iniciar aplicación**
-Para iniciar ejecutar en el directorio raíz: _mvn spring-boot:run_
+- Para iniciar ejecutar en el directorio raíz: _mvn spring-boot:run_
 
 
 ___
+**Funcionalidades**
+
 La API provee información de usuarios, álbumes, fotos, posts y comentarios con las siguientes urls (Suponiendo que se utiliza desde localhost en el puerto 8080):
 
 localhost:8080/api/users
