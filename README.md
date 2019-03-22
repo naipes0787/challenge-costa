@@ -1,5 +1,6 @@
-#Wolox Challenge
-######Desarrollado por Leandro Costa
+# Wolox Challenge
+
+###### Desarrollado por Leandro Costa
 
 
 ___
@@ -14,15 +15,18 @@ ___
 **Requisitos**
 - Poseer Maven
 - Es necesario tener MySQL
-- Se precisa tener creada la base de datos _wolox___challenge_
+- Se precisa tener creada la base de datos _wolox_challenge_
 - Se deberá configurar el acceso a la base de datos en el archivo _application.properties_ del directorio resources
 
 
 ___
-Para iniciar la aplicación ejecutar en el directorio raíz: _mvn spring-boot:run_
+**Iniciar aplicación**
+- Para iniciar ejecutar en el directorio raíz: _mvn spring-boot:run_
 
 
 ___
+**Funcionalidades**
+
 La API provee información de usuarios, álbumes, fotos, posts y comentarios con las siguientes urls (Suponiendo que se utiliza desde localhost en el puerto 8080):
 
 localhost:8080/api/users
