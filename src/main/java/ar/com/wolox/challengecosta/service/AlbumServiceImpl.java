@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.wolox.challengecosta.exception.NotFoundException;
+import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.model.AccessType;
 import ar.com.wolox.challengecosta.model.Album;
 import ar.com.wolox.challengecosta.model.AlbumUser;
@@ -36,7 +36,7 @@ public class AlbumServiceImpl implements AlbumService {
 	public void shareAlbumWithUser(Album album, User user, Long accessTypeId, 
 			User userOwnerAlbum) {
 		AccessType accessType = accessTypeRepository.findById(accessTypeId).
-				orElseThrow(() -> new NotFoundException("AccessType", "id", accessTypeId));
+				orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
 		AlbumUser albumUser = new AlbumUser(album, user, accessType);
 		if(!customAlbumUserRepository.existsAlbumUser(album.getId(), user.getId())) {
 			userRepository.save(user);
@@ -51,7 +51,7 @@ public class AlbumServiceImpl implements AlbumService {
 		AlbumUser albumUser = customAlbumUserRepository.getAlbumUserByAlbumAndUser(albumId, userId);
 		if(albumUser != null) {
 			AccessType accessType = accessTypeRepository.findById(accessTypeId).
-					orElseThrow(() -> new NotFoundException("AccessType", "id", accessTypeId));
+					orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
 			albumUser.setAccessType(accessType);
 			albumUserRepository.save(albumUser);
 		}

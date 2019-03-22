@@ -6,13 +6,16 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.model.Album;
 import ar.com.wolox.challengecosta.util.Constants;
 
@@ -41,9 +44,20 @@ public class AlbumController {
 	@GetMapping("/albums/{id}")
 	public Album getAlbumById(@PathVariable(value = "id") Long albumId) {
 		RestTemplate restTemplate = new RestTemplate();
-		Album album = restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
-				albumId.toString()), Album.class);
-		return album;
+		try {
+			Album album = restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
+					albumId.toString()), Album.class);
+			return album;
+		} catch (HttpClientErrorException e) {
+			HttpStatus status = e.getStatusCode();
+			if(status != HttpStatus.NOT_FOUND) {
+				// Si no es un 404 arrojo la excepción
+				throw e;
+			} else {
+				// Si es un 404 muestro un mensaje más entendible
+				throw new ResourceNotFoundException("Album", "albumId", albumId.toString());
+			}
+		}
 	}
 	
 	/**
