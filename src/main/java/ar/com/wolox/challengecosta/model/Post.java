@@ -1,4 +1,5 @@
 package ar.com.wolox.challengecosta.model;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -6,17 +7,20 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "album")
-public class Album {
+@Table(name = "post")
+public class Post {
 	@Id
 	@JsonProperty("id")
 	private Long id;
 	
+	@JsonProperty("userId")
+	private Long userId;
+
 	@JsonProperty("title")
 	private String title;
 	
-	@JsonProperty("userId")
-	private Long userId;
+	@JsonProperty("body")
+	private String body;
 
 	public Long getId() {
 		return id;
@@ -34,6 +38,14 @@ public class Album {
 		this.title = title;
 	}
 
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -41,5 +53,7 @@ public class Album {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+
 
 }

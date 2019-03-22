@@ -3,7 +3,8 @@ package ar.com.wolox.challengecosta.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.websocket.server.PathParam;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +16,14 @@ import org.springframework.web.client.RestTemplate;
 
 import ar.com.wolox.challengecosta.model.Album;
 import ar.com.wolox.challengecosta.model.Photo;
-import ar.com.wolox.challengecosta.service.AlbumServiceImpl;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class PhotoController {
 
-	@Autowired
-	AlbumServiceImpl albumService;
-
 	/**
-	 * Obtener todas las fotos del sistema
+	 * Get request para obtener todas las fotos del sistema
 	 * @return List<Photo>
 	 */
 	@GetMapping("/photos")
@@ -40,7 +37,7 @@ public class PhotoController {
 	}
     
 	/**
-	 * Obtener la foto solicitada según el id pasado por parámetro
+	 * Get request para obtener la foto solicitada según el id pasado por parámetro
 	 * @return {@link Photo}
 	 */
 	@GetMapping("/photos/{id}")
@@ -52,11 +49,11 @@ public class PhotoController {
 	}
 	
 	/**
-	 * Obtener las fotos pertenecientes al usuario cuyo id fue pasado por parámetro
+	 * Get request para obtener las fotos pertenecientes al usuario cuyo id fue pasado por parámetro
 	 * @return List<Photo>
 	 */
-	@GetMapping("/photosByUserId/{id}")
-	public List<Photo> getPhotosByUserId(@PathVariable(value = "id") Long userId) {
+	@GetMapping("/photosByUserId")
+	public List<Photo> getPhotosByUserId(@PathParam("userId") Long userId) {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<Album>> responseAlbum = restTemplate.exchange(
 				(Constants.REST_ALBUMS_BY_USER_URL + userId.toString()), HttpMethod.GET, null,
@@ -64,10 +61,10 @@ public class PhotoController {
 		List<Album> albums = responseAlbum.getBody();
 		List<Photo> photos = new ArrayList<Photo>();
 		albums.forEach(album -> {
-			ResponseEntity<List<Photo>> responseFoto = restTemplate.exchange(
+			ResponseEntity<List<Photo>> responsePhoto = restTemplate.exchange(
 					(Constants.REST_PHOTOS_BY_ALBUM_URL + album.getId().toString()), HttpMethod.GET, 
 					null, new ParameterizedTypeReference<List<Photo>>(){});
-			photos.addAll(responseFoto.getBody());
+			photos.addAll(responsePhoto.getBody());
 		});
 		return photos;
 	}

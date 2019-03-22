@@ -12,4 +12,11 @@ public final class Constants {
 	public static final String REST_PHOTOS_URL = REST_URL + "photos";
 	public static final String REST_PHOTOS_BY_ALBUM_URL = REST_PHOTOS_URL + "?albumId=";
 	
+	public static final String REST_POSTS_URL = REST_URL + "posts";
+	public static final String REST_POSTS_BY_USER_URL = REST_POSTS_URL + "?userId=";
+	
+	public static final String REST_COMMENTS_URL = REST_URL + "comments";
+	public static final String REST_COMMENTS_BY_POST_URL = REST_COMMENTS_URL + "?postId=";
+	public static final String REST_COMMENTS_BY_NAME_URL = REST_COMMENTS_URL + "?name=";
+	
 }

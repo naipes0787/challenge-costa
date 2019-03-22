@@ -2,7 +2,6 @@ package ar.com.wolox.challengecosta.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import ar.com.wolox.challengecosta.model.User;
-import ar.com.wolox.challengecosta.service.AlbumServiceImpl;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class UserController {
 
-	@Autowired
-	AlbumServiceImpl albumService;
-    
 	/**
-	 * Obtener todos los usuarios del sistema
+	 * Get request para obtener todos los usuarios del sistema
 	 * @return List<User>
 	 */
 	@GetMapping("/users")
@@ -38,7 +33,7 @@ public class UserController {
 	}
     
 	/**
-	 * Obtener el usuario solicitado según el id pasado por parámetro
+	 * Get request para obtener el usuario solicitado según el id pasado por parámetro
 	 * @return {@link User}
 	 */
 	@GetMapping("/users/{id}")

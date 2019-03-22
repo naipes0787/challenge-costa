@@ -3,7 +3,6 @@ package ar.com.wolox.challengecosta.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,19 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "photo")
 public class Photo {
 	@Id
+	@JsonProperty("id")
 	private Long id;
 	
-	@NotBlank
 	@JsonProperty("title")
 	private String title;
 	
 	@JsonProperty("albumId")
 	private Long albumId;
 	
-	@NotBlank
+	@JsonProperty("url")
 	private String url;
 	
-	@NotBlank
+	@JsonProperty("thumbnailUrl")
 	private String thumbnailUrl;
 
 	public Long getId() {

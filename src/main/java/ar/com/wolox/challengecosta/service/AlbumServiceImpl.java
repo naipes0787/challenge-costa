@@ -1,5 +1,7 @@
 package ar.com.wolox.challengecosta.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +14,14 @@ import ar.com.wolox.challengecosta.model.User;
 import ar.com.wolox.challengecosta.repository.AccessTypeRepository;
 import ar.com.wolox.challengecosta.repository.AlbumRepository;
 import ar.com.wolox.challengecosta.repository.AlbumUserRepository;
-import ar.com.wolox.challengecosta.repository.AlbumUserRepositoryImpl;
+import ar.com.wolox.challengecosta.repository.AlbumUserRepositoryCustomImpl;
 import ar.com.wolox.challengecosta.repository.UserRepository;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
 
 	@Autowired
-	AlbumUserRepositoryImpl customAlbumUserRepository;
+	AlbumUserRepositoryCustomImpl customAlbumUserRepository;
 	@Autowired
 	AlbumUserRepository albumUserRepository;
 	@Autowired
@@ -42,6 +44,22 @@ public class AlbumServiceImpl implements AlbumService {
 			albumRepository.save(album);
 			albumUserRepository.save(albumUser);
 		}
+	}
+
+	@Override
+	public void updateAccessToAlbum(Long albumId, Long userId, Long accessTypeId) {
+		AlbumUser albumUser = customAlbumUserRepository.getAlbumUserByAlbumAndUser(albumId, userId);
+		if(albumUser != null) {
+			AccessType accessType = accessTypeRepository.findById(accessTypeId).
+					orElseThrow(() -> new NotFoundException("AccessType", "id", accessTypeId));
+			albumUser.setAccessType(accessType);
+			albumUserRepository.save(albumUser);
+		}
+	}
+	
+	@Override
+	public List<User> getUsersByAlbumAndAccessType(Long albumId, Long accessTypeId){
+		return customAlbumUserRepository.getUsersByAlbumAndAccessType(albumId, accessTypeId);
 	}
 	
 }
