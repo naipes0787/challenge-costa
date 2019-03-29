@@ -16,15 +16,15 @@ public class AlbumUser {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "album_id", nullable=false)
+	@JoinColumn(nullable=false)
 	private Album album;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable=false)
+	@JoinColumn(nullable=false)
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "access_type_id", nullable=false)
+	@JoinColumn(nullable=false)
 	private AccessType accessType;
 	
 	/**

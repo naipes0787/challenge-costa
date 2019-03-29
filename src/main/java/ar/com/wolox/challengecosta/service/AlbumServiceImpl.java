@@ -33,14 +33,12 @@ public class AlbumServiceImpl implements AlbumService {
 	
 	@Transactional
 	@Override
-	public void shareAlbumWithUser(Album album, User user, Long accessTypeId, 
-			User userOwnerAlbum) {
+	public void shareAlbumWithUser(Album album, User user, Long accessTypeId) {
 		AccessType accessType = accessTypeRepository.findById(accessTypeId).
 				orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
 		AlbumUser albumUser = new AlbumUser(album, user, accessType);
 		if(!customAlbumUserRepository.existsAlbumUser(album.getId(), user.getId())) {
 			userRepository.save(user);
-			userRepository.save(userOwnerAlbum);
 			albumRepository.save(album);
 			albumUserRepository.save(albumUser);
 		}

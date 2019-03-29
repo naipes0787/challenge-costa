@@ -36,9 +36,7 @@ public class AlbumUserController {
 				userId.toString()), User.class);
 		Album album = restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
 				albumId.toString()), Album.class);
-		User userOwnerAlbum = restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
-				album.getUserId().toString()), User.class);
-		albumService.shareAlbumWithUser(album, user, accessTypeId, userOwnerAlbum);
+		albumService.shareAlbumWithUser(album, user, accessTypeId);
 	}
 	
 	/**

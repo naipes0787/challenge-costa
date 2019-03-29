@@ -1,7 +1,10 @@
 package ar.com.wolox.challengecosta.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,8 +16,9 @@ public class Comment {
 	@JsonProperty("id")
 	private Long id;
 
-	@JsonProperty("postId")
-	private Long postId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable=false)
+	private Post post;
 	
 	@JsonProperty("name")
 	private String name;
@@ -57,12 +61,12 @@ public class Comment {
 		this.name = name;
 	}
 
-	public Long getPostId() {
-		return postId;
+	public Post getPost() {
+		return post;
 	}
 
-	public void setPostId(Long postId) {
-		this.postId = postId;
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
 }

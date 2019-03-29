@@ -14,9 +14,6 @@ public class Album {
 	
 	@JsonProperty("title")
 	private String title;
-	
-	@JsonProperty("userId")
-	private Long userId;
 
 	public Long getId() {
 		return id;
@@ -32,14 +29,6 @@ public class Album {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 }

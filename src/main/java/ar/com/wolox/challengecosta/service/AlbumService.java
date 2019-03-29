@@ -13,10 +13,8 @@ public interface AlbumService {
 	 * @param album
 	 * @param user
 	 * @param accessTypeId
-	 * @param userOwnerAlbum
 	 */
-	public void shareAlbumWithUser(Album album, User user, Long accessTypeId, 
-			User userOwnerAlbum);
+	public void shareAlbumWithUser(Album album, User user, Long accessTypeId);
 	
 	/**
 	 * Se actualiza el accessType que posee el usuario en el álbum en cuestión

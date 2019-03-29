@@ -1,7 +1,10 @@
 package ar.com.wolox.challengecosta.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,8 +19,9 @@ public class Photo {
 	@JsonProperty("title")
 	private String title;
 	
-	@JsonProperty("albumId")
-	private Long albumId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable=false)
+	private Album album;
 	
 	@JsonProperty("url")
 	private String url;
@@ -41,12 +45,12 @@ public class Photo {
 		this.title = title;
 	}
 
-	public Long getAlbumId() {
-		return albumId;
+	public Album getAlbum() {
+		return album;
 	}
 
-	public void setAlbumId(Long albumId) {
-		this.albumId = albumId;
+	public void setAlbum(Album album) {
+		this.album = album;
 	}
 
 	public String getUrl() {
