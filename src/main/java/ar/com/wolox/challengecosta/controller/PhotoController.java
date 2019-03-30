@@ -76,7 +76,7 @@ public class PhotoController {
 		List<Photo> photos = new ArrayList<Photo>();
 		albums.forEach(album -> {
 			ResponseEntity<List<Photo>> responsePhoto = restTemplate.exchange(
-					(Constants.REST_PHOTOS_BY_ALBUM_URL + album.getId().toString()), HttpMethod.GET, 
+					(Constants.REST_PHOTOS_BY_ALBUM_URL + album.getRestId().toString()), HttpMethod.GET, 
 					null, new ParameterizedTypeReference<List<Photo>>(){});
 			photos.addAll(responsePhoto.getBody());
 		});

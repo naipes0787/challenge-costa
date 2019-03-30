@@ -1,8 +1,11 @@
 package ar.com.wolox.challengecosta.model;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,8 +14,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 	@Id
-	@JsonProperty("id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
+	
+	@JsonProperty("id")
+	private Long restId;
 	
 	@JsonProperty("name")
 	private String name;
@@ -53,6 +60,14 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Long getRestId() {
+		return restId;
+	}
+
+	public void setRestId(Long restId) {
+		this.restId = restId;
 	}
 
 }

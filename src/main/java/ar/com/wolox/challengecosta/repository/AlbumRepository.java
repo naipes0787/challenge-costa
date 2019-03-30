@@ -8,4 +8,6 @@ import ar.com.wolox.challengecosta.model.Album;
 @Repository
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
+	Album findByRestId(Long restId);
+	
 }

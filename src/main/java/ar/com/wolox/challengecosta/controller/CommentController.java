@@ -87,7 +87,7 @@ public class CommentController {
 				List<Comment> commentsByUser = new ArrayList<Comment>();
 				posts.forEach(post -> {
 					ResponseEntity<List<Comment>> responseComment = restTemplate.exchange(
-							(Constants.REST_COMMENTS_BY_POST_URL + post.getId().toString()), HttpMethod.GET, 
+							(Constants.REST_COMMENTS_BY_POST_URL + post.getRestId().toString()), HttpMethod.GET, 
 							null, new ParameterizedTypeReference<List<Comment>>(){});
 					commentsByUser.addAll(responseComment.getBody());
 				});

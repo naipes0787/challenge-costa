@@ -42,4 +42,18 @@ public interface AlbumService {
 	 */
 	public Boolean existsAlbumUser(Long albumId, Long userId);
 	
+	/**
+	 * Devuelve TRUE si existe un album asociado al id pasado por parámetro
+	 * @param albumId
+	 * @return {@link Boolean}
+	 */
+	public Boolean existsAlbum(Long albumId);
+	
+	/**
+	 * Devuelve TRUE si existe un user asociado al id pasado por parámetro
+	 * @param userId
+	 * @return {@link Boolean}
+	 */
+	public Boolean existsUser(Long userId);
+	
 }

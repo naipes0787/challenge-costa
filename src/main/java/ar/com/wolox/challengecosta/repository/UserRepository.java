@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findByAlbumAndAccessType(@Param("albumId") Long albumId, 
 			@Param("accessTypeId") AccessType accessType);
 	
+	User findByRestId(Long restId);
+	
 }

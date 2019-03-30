@@ -1,5 +1,10 @@
 package ar.com.wolox.challengecosta.model;
 
+/**
+ * Enum para especificar los tipos de permisos que se pueden tener en los álbumes. 
+ * Existe UNKNOWN para evitar utilizar null cuando no se encuentran resultados.
+ * @author naipes
+ */
 public enum AccessType {
 	READ(1L),
 	WRITE(2L),
