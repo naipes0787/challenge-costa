@@ -14,14 +14,11 @@ import ar.com.wolox.challengecosta.model.User;
 import ar.com.wolox.challengecosta.repository.AccessTypeRepository;
 import ar.com.wolox.challengecosta.repository.AlbumRepository;
 import ar.com.wolox.challengecosta.repository.AlbumUserRepository;
-import ar.com.wolox.challengecosta.repository.AlbumUserRepositoryCustomImpl;
 import ar.com.wolox.challengecosta.repository.UserRepository;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
 
-	@Autowired
-	AlbumUserRepositoryCustomImpl customAlbumUserRepository;
 	@Autowired
 	AlbumUserRepository albumUserRepository;
 	@Autowired
@@ -37,16 +34,24 @@ public class AlbumServiceImpl implements AlbumService {
 		AccessType accessType = accessTypeRepository.findById(accessTypeId).
 				orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
 		AlbumUser albumUser = new AlbumUser(album, user, accessType);
-		if(!customAlbumUserRepository.existsAlbumUser(album.getId(), user.getId())) {
+		if(!this.existsAlbumUser(album.getId(), user.getId())) {
 			userRepository.save(user);
 			albumRepository.save(album);
 			albumUserRepository.save(albumUser);
 		}
 	}
+	
+	@Override
+	public Boolean existsAlbumUser(Long albumId, Long userId) {
+		if(albumUserRepository.findByAlbum_idAndUser_id(albumId, userId) != null) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
 
 	@Override
 	public void updateAccessToAlbum(Long albumId, Long userId, Long accessTypeId) {
-		AlbumUser albumUser = customAlbumUserRepository.getAlbumUserByAlbumAndUser(albumId, userId);
+		AlbumUser albumUser = albumUserRepository.findByAlbum_idAndUser_id(albumId, userId);
 		if(albumUser != null) {
 			AccessType accessType = accessTypeRepository.findById(accessTypeId).
 					orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
@@ -57,7 +62,7 @@ public class AlbumServiceImpl implements AlbumService {
 	
 	@Override
 	public List<User> getUsersByAlbumAndAccessType(Long albumId, Long accessTypeId){
-		return customAlbumUserRepository.getUsersByAlbumAndAccessType(albumId, accessTypeId);
+		return userRepository.findByAlbumAndAccessType(albumId, accessTypeId);
 	}
 	
 }

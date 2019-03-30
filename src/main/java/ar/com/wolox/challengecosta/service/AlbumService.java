@@ -33,4 +33,13 @@ public interface AlbumService {
 	 */
 	public List<User> getUsersByAlbumAndAccessType(Long albumId, Long accessTypeId);
 	
+	/**
+	 * Devuelve TRUE si existe un AlbumUser que relacione al álbum y usuario pasados 
+	 * por parámetro
+	 * @param albumId
+	 * @param userId
+	 * @return {@link Boolean}
+	 */
+	public Boolean existsAlbumUser(Long albumId, Long userId);
+	
 }

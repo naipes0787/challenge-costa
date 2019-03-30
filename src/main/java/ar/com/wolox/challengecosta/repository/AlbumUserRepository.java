@@ -7,5 +7,7 @@ import ar.com.wolox.challengecosta.model.AlbumUser;
 
 @Repository
 public interface AlbumUserRepository extends JpaRepository<AlbumUser, Long> {
-
+	
+	AlbumUser findByAlbum_idAndUser_id(Long albumId, Long userId);
+	
 }
