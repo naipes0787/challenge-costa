@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ar.com.wolox.challengecosta.model.AccessType;
 import ar.com.wolox.challengecosta.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query("SELECT au.user FROM AlbumUser AS au "
-			+ "WHERE au.album.id = :albumId AND au.accessType.id = :accessTypeId")
-	List<User> findByAlbumAndAccessType(@Param("albumId") Long albumId, @Param("accessTypeId") Long accessTypeId);
+			+ "WHERE au.album.id = :albumId AND au.accessType = :accessTypeId")
+	List<User> findByAlbumAndAccessType(@Param("albumId") Long albumId, 
+			@Param("accessTypeId") AccessType accessType);
 	
 }

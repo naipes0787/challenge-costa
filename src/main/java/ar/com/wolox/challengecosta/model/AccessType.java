@@ -1,36 +1,23 @@
 package ar.com.wolox.challengecosta.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-
-@Entity
-@Table(name = "access_type")
-public class AccessType {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public enum AccessType {
+	READ(1L),
+	WRITE(2L),
+	READ_WRITE(3L),
+	UNKNOWN(0L);
 	
-	@NotBlank
-	private String label;
+    private Long id;
 
-	public Long getId() {
-		return id;
+    AccessType(Long id) {
+        this.id = id;
+    }
+	
+	public static AccessType getById(Long id) {
+	    for(AccessType accessType : values()) {
+	        if(accessType.id.equals(id)) {
+	        	return accessType;
+	        }
+	    }
+	    return UNKNOWN;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
 }

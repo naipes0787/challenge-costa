@@ -11,7 +11,6 @@ import ar.com.wolox.challengecosta.model.AccessType;
 import ar.com.wolox.challengecosta.model.Album;
 import ar.com.wolox.challengecosta.model.AlbumUser;
 import ar.com.wolox.challengecosta.model.User;
-import ar.com.wolox.challengecosta.repository.AccessTypeRepository;
 import ar.com.wolox.challengecosta.repository.AlbumRepository;
 import ar.com.wolox.challengecosta.repository.AlbumUserRepository;
 import ar.com.wolox.challengecosta.repository.UserRepository;
@@ -22,8 +21,6 @@ public class AlbumServiceImpl implements AlbumService {
 	@Autowired
 	AlbumUserRepository albumUserRepository;
 	@Autowired
-	AccessTypeRepository accessTypeRepository;
-	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	AlbumRepository albumRepository;
@@ -31,13 +28,16 @@ public class AlbumServiceImpl implements AlbumService {
 	@Transactional
 	@Override
 	public void shareAlbumWithUser(Album album, User user, Long accessTypeId) {
-		AccessType accessType = accessTypeRepository.findById(accessTypeId).
-				orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
-		AlbumUser albumUser = new AlbumUser(album, user, accessType);
-		if(!this.existsAlbumUser(album.getId(), user.getId())) {
-			userRepository.save(user);
-			albumRepository.save(album);
-			albumUserRepository.save(albumUser);
+		AccessType accessType = AccessType.getById(accessTypeId);
+		if(accessType.equals(AccessType.UNKNOWN)){
+			throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
+		} else {
+			AlbumUser albumUser = new AlbumUser(album, user, accessType);
+			if(!this.existsAlbumUser(album.getId(), user.getId())) {
+				userRepository.save(user);
+				albumRepository.save(album);
+				albumUserRepository.save(albumUser);
+			}
 		}
 	}
 	
@@ -53,16 +53,24 @@ public class AlbumServiceImpl implements AlbumService {
 	public void updateAccessToAlbum(Long albumId, Long userId, Long accessTypeId) {
 		AlbumUser albumUser = albumUserRepository.findByAlbum_idAndUser_id(albumId, userId);
 		if(albumUser != null) {
-			AccessType accessType = accessTypeRepository.findById(accessTypeId).
-					orElseThrow(() -> new ResourceNotFoundException("AccessType", "id", accessTypeId));
-			albumUser.setAccessType(accessType);
-			albumUserRepository.save(albumUser);
+			AccessType accessType = AccessType.getById(accessTypeId);
+			if(accessType.equals(AccessType.UNKNOWN)){
+				throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
+			} else {
+				albumUser.setAccessType(accessType);
+				albumUserRepository.save(albumUser);
+			}
 		}
 	}
 	
 	@Override
 	public List<User> getUsersByAlbumAndAccessType(Long albumId, Long accessTypeId){
-		return userRepository.findByAlbumAndAccessType(albumId, accessTypeId);
+		AccessType accessType = AccessType.getById(accessTypeId);
+		if(accessType.equals(AccessType.UNKNOWN)){
+			throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
+		} else {
+			return userRepository.findByAlbumAndAccessType(albumId, accessType);
+		}
 	}
 	
 }
