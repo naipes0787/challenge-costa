@@ -19,6 +19,9 @@ public class Album {
 	@JsonProperty("id")
 	private Long restId;
 	
+	@JsonProperty("userId")
+	private Long ownerRestId;
+	
 	@JsonProperty("title")
 	private String title;
 
@@ -44,6 +47,14 @@ public class Album {
 
 	public void setRestId(Long restId) {
 		this.restId = restId;
+	}
+
+	public Long getOwnerRestId() {
+		return ownerRestId;
+	}
+
+	public void setOwnerRestId(Long ownerRestId) {
+		this.ownerRestId = ownerRestId;
 	}
 
 }

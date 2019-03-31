@@ -32,14 +32,21 @@ public class AlbumServiceImpl implements AlbumService {
 		if(accessType.equals(AccessType.UNKNOWN)){
 			throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
 		} else {
-			AlbumUser albumUser = new AlbumUser(album, user, accessType);
-			if(!this.existsAlbumUser(album.getRestId(), user.getRestId())) {
+			/* Sólo se guardará el permiso si no existe el registro de AlbumUser 
+			 * y no se está tratando de compartir con el propietario (Ya que no tendría sentido) */
+			if(!this.existsAlbumUser(album.getRestId(), user.getRestId())
+					&& !album.getOwnerRestId().equals(user.getRestId())) {
 				if(!this.existsAlbum(album.getRestId())) {
 					albumRepository.save(album);					
+				} else {
+					album = albumRepository.findByRestId(album.getRestId());
 				}
 				if(!this.existsUser(user.getRestId())) {
 					userRepository.save(user);					
+				} else {
+					user = userRepository.findByRestId(user.getRestId());
 				}
+				AlbumUser albumUser = new AlbumUser(album, user, accessType);
 				albumUserRepository.save(albumUser);
 			}
 		}
