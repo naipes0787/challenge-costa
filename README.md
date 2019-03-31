@@ -13,8 +13,8 @@ ___
 
 ___
 **Requisitos**
-- Poseer Maven
-- Es necesario tener MySQL
+- Maven
+- MySQL
 - Se precisa tener creada la base de datos _wolox_challenge_
 - Se deberá configurar el acceso a la base de datos en el archivo _application.properties_ del directorio resources
 
