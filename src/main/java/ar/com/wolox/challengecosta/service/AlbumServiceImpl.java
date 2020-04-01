@@ -1,6 +1,7 @@
 package ar.com.wolox.challengecosta.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ import ar.com.wolox.challengecosta.repository.UserRepository;
 public class AlbumServiceImpl implements AlbumService {
 
 	@Autowired
-	AlbumUserRepository albumUserRepository;
+	private AlbumUserRepository albumUserRepository;
+
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
+
 	@Autowired
-	AlbumRepository albumRepository;
+	private AlbumRepository albumRepository;
 	
 	@Transactional
 	@Override
@@ -36,16 +39,10 @@ public class AlbumServiceImpl implements AlbumService {
 			 * y no se está tratando de compartir con el propietario (Ya que no tendría sentido) */
 			if(!this.existsAlbumUser(album.getRestId(), user.getRestId())
 					&& !album.getOwnerRestId().equals(user.getRestId())) {
-				if(!this.existsAlbum(album.getRestId())) {
-					albumRepository.save(album);					
-				} else {
-					album = albumRepository.findByRestId(album.getRestId());
-				}
-				if(!this.existsUser(user.getRestId())) {
-					userRepository.save(user);					
-				} else {
-					user = userRepository.findByRestId(user.getRestId());
-				}
+				user = userRepository.findByRestId(user.getRestId())
+						.orElse(userRepository.save(user));
+				album = albumRepository.findByRestId(album.getRestId())
+						.orElse(albumRepository.save(album));
 				AlbumUser albumUser = new AlbumUser(album, user, accessType);
 				albumUserRepository.save(albumUser);
 			}
@@ -54,39 +51,33 @@ public class AlbumServiceImpl implements AlbumService {
 	
 	@Override
 	public Boolean existsAlbumUser(Long albumId, Long userId) {
-		if(albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId) != null) {
-			return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
+		return !(Optional.empty().equals(
+				albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId)));
 	}
 	
 	@Override
 	public Boolean existsAlbum(Long restId) {
-		if(albumRepository.findByRestId(restId) != null) {
-			return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
+		return !(Optional.empty().equals(
+				albumRepository.findByRestId(restId)));
 	}
 	
 	@Override
 	public Boolean existsUser(Long restId) {
-		if(userRepository.findByRestId(restId) != null) {
-			return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
+		return !(Optional.empty().equals(
+				userRepository.findByRestId(restId)));
 	}
 
 	@Override
 	public void updateAccessToAlbum(Long albumId, Long userId, Long accessTypeId) {
-		AlbumUser albumUser = albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId);
-		if(albumUser != null) {
-			AccessType accessType = AccessType.getById(accessTypeId);
-			if(accessType.equals(AccessType.UNKNOWN)){
-				throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
-			} else {
-				albumUser.setAccessType(accessType);
-				albumUserRepository.save(albumUser);
-			}
+		AccessType accessType = AccessType.getById(accessTypeId);
+		if(accessType.equals(AccessType.UNKNOWN)){
+			throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
+		} else {
+			AlbumUser albumUser = albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId)
+					.orElseThrow(() -> new ResourceNotFoundException(AlbumUser.class.toString(),
+							"id", (albumId + ", " + userId)));
+			albumUser.setAccessType(accessType);
+			albumUserRepository.save(albumUser);
 		}
 	}
 	

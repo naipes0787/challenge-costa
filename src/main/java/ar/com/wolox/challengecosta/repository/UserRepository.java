@@ -1,6 +1,7 @@
 package ar.com.wolox.challengecosta.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findByAlbumAndAccessType(@Param("albumId") Long albumId, 
 			@Param("accessTypeId") AccessType accessType);
 	
-	User findByRestId(Long restId);
+	Optional<User> findByRestId(Long restId);
 	
 }

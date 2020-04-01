@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.wolox.challengecosta.model.AlbumUser;
 
+import java.util.Optional;
+
 @Repository
 public interface AlbumUserRepository extends JpaRepository<AlbumUser, Long> {
 	
-	AlbumUser findByAlbum_restIdAndUser_restId(Long albumId, Long userId);
+	Optional<AlbumUser> findByAlbum_restIdAndUser_restId(Long albumId, Long userId);
 	
 }
