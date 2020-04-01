@@ -1,6 +1,16 @@
 package ar.com.wolox.challengecosta.util;
 
+/**
+ * Clase para centralizar las constantes de la aplicación. Es final para evitar herencia.
+ */
 public final class Constants {
+
+	/**
+	 * Constructor privado para evitar instanciación
+	 */
+	private Constants() {
+
+	}
 
 	public static final String REST_URL = "https://jsonplaceholder.typicode.com/";
 	
