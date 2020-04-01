@@ -18,14 +18,14 @@ import ar.com.wolox.challengecosta.model.Post;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 public class PostController {
 
 	/**
 	 * Get request para obtener todos los posts del sistema
 	 * @return List<Post>
 	 */
-	@GetMapping("/posts")
+	@GetMapping
 	public List<Post> getAllPosts() {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<Post>> response = restTemplate.exchange(
@@ -39,7 +39,7 @@ public class PostController {
 	 * Get request para obtener el post solicitado según el id pasado por parámetro
 	 * @return {@link Post}
 	 */
-	@GetMapping("/posts/{id}")
+	@GetMapping("/{id}")
 	public Post getPostById(@PathVariable(value = "id") Long postId) {
 		RestTemplate restTemplate = new RestTemplate();
 		try {

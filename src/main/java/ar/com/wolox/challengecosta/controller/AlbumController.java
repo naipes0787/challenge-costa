@@ -20,14 +20,14 @@ import ar.com.wolox.challengecosta.model.Album;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/albums")
 public class AlbumController {
 
 	/**
 	 * Get request para obtener todos los álbumes del sistema
 	 * @return List<Album>
 	 */
-	@GetMapping("/albums")
+	@GetMapping
 	public List<Album> getAllAlbums() {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<Album>> response = restTemplate.exchange(
@@ -41,7 +41,7 @@ public class AlbumController {
 	 * Get request para obtener el álbum solicitado según el id pasado por parámetro
 	 * @return {@link Album}
 	 */
-	@GetMapping("/albums/{id}")
+	@GetMapping("/{id}")
 	public Album getAlbumById(@PathVariable(value = "id") Long albumId) {
 		RestTemplate restTemplate = new RestTemplate();
 		try {

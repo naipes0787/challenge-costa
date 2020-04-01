@@ -18,14 +18,14 @@ import ar.com.wolox.challengecosta.model.User;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
 	/**
 	 * Get request para obtener todos los usuarios del sistema
 	 * @return List<User>
 	 */
-	@GetMapping("/users")
+	@GetMapping
 	public List<User> getAllUsers() {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<User>> response = restTemplate.exchange(
@@ -39,7 +39,7 @@ public class UserController {
 	 * Get request para obtener el usuario solicitado según el id pasado por parámetro
 	 * @return {@link User}
 	 */
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	public User getUserById(@PathVariable(value = "id") Long userId) {
 		RestTemplate restTemplate = new RestTemplate();
 		try {

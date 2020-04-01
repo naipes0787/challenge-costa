@@ -22,14 +22,14 @@ import ar.com.wolox.challengecosta.model.Post;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comments")
 public class CommentController {
 
 	/**
 	 * Get request para obtener todos los comentarios del sistema
 	 * @return List<Comment>
 	 */
-	@GetMapping("/comments")
+	@GetMapping
 	public List<Comment> getAllComments() {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<Comment>> response = restTemplate.exchange(
@@ -43,7 +43,7 @@ public class CommentController {
 	 * Get request para obtener el comentario solicitado según el id pasado por parámetro
 	 * @return {@link Comment}
 	 */
-	@GetMapping("/comments/{id}")
+	@GetMapping("/{id}")
 	public Comment getCommentById(@PathVariable(value = "id") Long commentId) {
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -68,7 +68,7 @@ public class CommentController {
 	 * no se buscara por usuario)
 	 * @return List<Comment>
 	 */
-	@GetMapping("/filterComments")
+	@GetMapping("/filter")
 	public List<Comment> getFilteredComment(@PathParam("name") String name,
 		    @PathParam("userId") Long userId) {
 		RestTemplate restTemplate = new RestTemplate();

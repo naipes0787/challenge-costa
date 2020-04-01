@@ -22,14 +22,14 @@ import ar.com.wolox.challengecosta.model.Photo;
 import ar.com.wolox.challengecosta.util.Constants;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/photos")
 public class PhotoController {
 
 	/**
 	 * Get request para obtener todas las fotos del sistema
 	 * @return List<Photo>
 	 */
-	@GetMapping("/photos")
+	@GetMapping
 	public List<Photo> getAllPhotos() {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<Photo>> response = restTemplate.exchange(
@@ -43,7 +43,7 @@ public class PhotoController {
 	 * Get request para obtener la foto solicitada según el id pasado por parámetro
 	 * @return {@link Photo}
 	 */
-	@GetMapping("/photos/{id}")
+	@GetMapping("/{id}")
 	public Photo getPhotoById(@PathVariable(value = "id") Long photoId) {
 		RestTemplate restTemplate = new RestTemplate();
 		try {
