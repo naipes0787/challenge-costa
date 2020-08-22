@@ -1,5 +1,6 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.PostDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.models.Post;
 import ar.com.wolox.challengecosta.utils.Constants;
@@ -25,11 +26,11 @@ public class PostController {
      * @return List<Post>
      */
     @GetMapping
-    public List<Post> getAllPosts() {
+    public List<PostDTO> getAllPosts() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Post>> response = restTemplate.exchange(
+        ResponseEntity<List<PostDTO>> response = restTemplate.exchange(
                 Constants.REST_POSTS_URL, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Post>>() {
+                new ParameterizedTypeReference<List<PostDTO>>() {
                 });
         return response.getBody();
     }

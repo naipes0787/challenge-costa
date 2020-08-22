@@ -1,5 +1,6 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.PhotoDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.models.Album;
 import ar.com.wolox.challengecosta.models.Photo;
@@ -29,11 +30,11 @@ public class PhotoController {
      * @return List<Photo>
      */
     @GetMapping
-    public List<Photo> getAllPhotos() {
+    public List<PhotoDTO> getAllPhotos() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Photo>> response = restTemplate.exchange(
+        ResponseEntity<List<PhotoDTO>> response = restTemplate.exchange(
                 Constants.REST_PHOTOS_URL, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Photo>>() {
+                new ParameterizedTypeReference<List<PhotoDTO>>() {
                 });
         return response.getBody();
     }

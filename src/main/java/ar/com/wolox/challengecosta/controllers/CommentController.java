@@ -1,5 +1,6 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.CommentDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.models.Comment;
 import ar.com.wolox.challengecosta.models.Post;
@@ -29,14 +30,13 @@ public class CommentController {
      * @return List<Comment>
      */
     @GetMapping
-    public List<Comment> getAllComments() {
+    public List<CommentDTO> getAllComments() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Comment>> response = restTemplate.exchange(
+        ResponseEntity<List<CommentDTO>> response = restTemplate.exchange(
                 Constants.REST_COMMENTS_URL, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Comment>>() {
+                new ParameterizedTypeReference<List<CommentDTO>>() {
                 });
-        List<Comment> comments = response.getBody();
-        return comments;
+        return response.getBody();
     }
 
     /**

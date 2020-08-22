@@ -1,5 +1,6 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.AlbumDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.models.Album;
 import ar.com.wolox.challengecosta.utils.Constants;
@@ -26,11 +27,11 @@ public class AlbumController {
      * @return List<Album>
      */
     @GetMapping
-    public List<Album> getAllAlbums() {
+    public List<AlbumDTO> getAllAlbums() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Album>> response = restTemplate.exchange(
+        ResponseEntity<List<AlbumDTO>> response = restTemplate.exchange(
                 Constants.REST_ALBUMS_URL, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Album>>() {
+                new ParameterizedTypeReference<List<AlbumDTO>>() {
                 });
         return response.getBody();
     }

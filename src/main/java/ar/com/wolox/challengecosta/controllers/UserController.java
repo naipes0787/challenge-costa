@@ -1,5 +1,6 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.UserDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
 import ar.com.wolox.challengecosta.models.User;
 import ar.com.wolox.challengecosta.utils.Constants;
@@ -25,11 +26,11 @@ public class UserController {
      * @return List<User>
      */
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<User>> response = restTemplate.exchange(
+        ResponseEntity<List<UserDTO>> response = restTemplate.exchange(
                 Constants.REST_USERS_URL, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<User>>() {
+                new ParameterizedTypeReference<List<UserDTO>>() {
                 });
         return response.getBody();
     }
