@@ -1,7 +1,9 @@
 package ar.com.wolox.challengecosta.controller;
 
+import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
+import ar.com.wolox.challengecosta.model.Post;
+import ar.com.wolox.challengecosta.util.Constants;
 import java.util.List;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -13,49 +15,48 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.model.Post;
-import ar.com.wolox.challengecosta.util.Constants;
-
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
 
-	/**
-	 * Get request para obtener todos los posts del sistema
-	 * @return List<Post>
-	 */
-	@GetMapping
-	public List<Post> getAllPosts() {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<Post>> response = restTemplate.exchange(
-				Constants.REST_POSTS_URL, HttpMethod.GET, null,
-		  new ParameterizedTypeReference<List<Post>>(){});
-		List<Post> posts = response.getBody();
-		return posts;
-	}
-    
-	/**
-	 * Get request para obtener el post solicitado según el id pasado por parámetro
-	 * @return {@link Post}
-	 */
-	@GetMapping("/{id}")
-	public Post getPostById(@PathVariable(value = "id") Long postId) {
-		RestTemplate restTemplate = new RestTemplate();
-		try {
-			Post post = restTemplate.getForObject((Constants.REST_POSTS_URL + "/" +
-					postId.toString()), Post.class);
-			return post;
-		} catch (HttpClientErrorException e) {
-			HttpStatus status = e.getStatusCode();
-			if(status != HttpStatus.NOT_FOUND) {
-				// Si no es un 404 arrojo la excepción
-				throw e;
-			} else {
-				// Si es un 404 muestro un mensaje más entendible
-				throw new ResourceNotFoundException("Post", "postId", postId.toString());
-			}
-		}
-	}
+    /**
+     * Get all the posts
+     *
+     * @return List<Post>
+     */
+    @GetMapping
+    public List<Post> getAllPosts() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<Post>> response = restTemplate.exchange(
+                Constants.REST_POSTS_URL, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Post>>() {
+                });
+        List<Post> posts = response.getBody();
+        return posts;
+    }
+
+    /**
+     * Get a specific post by id
+     *
+     * @param postId The id of the post
+     *
+     * @return {@link Post}
+     */
+    @GetMapping("/{id}")
+    public Post getPostById(@PathVariable(value = "id") Long postId) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            Post post = restTemplate.getForObject((Constants.REST_POSTS_URL + "/" +
+                    postId.toString()), Post.class);
+            return post;
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
+            if (status != HttpStatus.NOT_FOUND) {
+                throw e;
+            } else {
+                throw new ResourceNotFoundException("Post", "postId", postId.toString());
+            }
+        }
+    }
 
 }

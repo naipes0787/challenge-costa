@@ -1,7 +1,9 @@
 package ar.com.wolox.challengecosta.controller;
 
+import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
+import ar.com.wolox.challengecosta.model.User;
+import ar.com.wolox.challengecosta.util.Constants;
 import java.util.List;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -13,49 +15,50 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.model.User;
-import ar.com.wolox.challengecosta.util.Constants;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-	/**
-	 * Get request para obtener todos los usuarios del sistema
-	 * @return List<User>
-	 */
-	@GetMapping
-	public List<User> getAllUsers() {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List<User>> response = restTemplate.exchange(
-				Constants.REST_USERS_URL, HttpMethod.GET, null,
-		  new ParameterizedTypeReference<List<User>>(){});
-		List<User> users = response.getBody();
-		return users;
-	}
-    
-	/**
-	 * Get request para obtener el usuario solicitado según el id pasado por parámetro
-	 * @return {@link User}
-	 */
-	@GetMapping("/{id}")
-	public User getUserById(@PathVariable(value = "id") Long userId) {
-		RestTemplate restTemplate = new RestTemplate();
-		try {
-			User user = restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
-				userId.toString()), User.class);
-			return user;
-		} catch (HttpClientErrorException e) {
-			HttpStatus status = e.getStatusCode();
-			if(status != HttpStatus.NOT_FOUND) {
-				// Si no es un 404 arrojo la excepción
-				throw e;
-			} else {
-				// Si es un 404 muestro un mensaje más entendible
-				throw new ResourceNotFoundException("User", "userId", userId.toString());
-			}
-		}
-	}
+    /**
+     * Get all the users
+     *
+     * @return List<User>
+     */
+    @GetMapping
+    public List<User> getAllUsers() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<User>> response = restTemplate.exchange(
+                Constants.REST_USERS_URL, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<User>>() {
+                });
+        List<User> users = response.getBody();
+        return users;
+    }
+
+    /**
+     * Get a user by id
+     *
+     * @param userId The id of the user
+     *
+     * @return {@link User}
+     */
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable(value = "id") Long userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            User user = restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
+                    userId.toString()), User.class);
+            return user;
+        } catch (HttpClientErrorException e) {
+            HttpStatus status = e.getStatusCode();
+            if (status != HttpStatus.NOT_FOUND) {
+                // Si no es un 404 arrojo la excepción
+                throw e;
+            } else {
+                // Si es un 404 muestro un mensaje más entendible
+                throw new ResourceNotFoundException("User", "userId", userId.toString());
+            }
+        }
+    }
 
 }

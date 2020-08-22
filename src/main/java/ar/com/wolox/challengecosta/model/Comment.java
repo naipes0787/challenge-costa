@@ -1,5 +1,7 @@
 package ar.com.wolox.challengecosta.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,79 +11,77 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Entity
 @Table(name = "comment")
 public class Comment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
-	private Long id;
-	
-	@JsonProperty("id")
-	private Long restId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable=false)
-	private Post post;
-	
-	@JsonProperty("name")
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
 
-	@JsonProperty("email")
-	private String email;
+    @JsonProperty("id")
+    private Long restId;
 
-	@JsonProperty("body")
-	private String body;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Post post;
 
-	public Long getId() {
-		return id;
-	}
+    @JsonProperty("name")
+    private String name;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @JsonProperty("email")
+    private String email;
 
-	public String getBody() {
-		return body;
-	}
+    @JsonProperty("body")
+    private String body;
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Post getPost() {
-		return post;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPost(Post post) {
-		this.post = post;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Long getRestId() {
-		return restId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setRestId(Long restId) {
-		this.restId = restId;
-	}
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public Long getRestId() {
+        return restId;
+    }
+
+    public void setRestId(Long restId) {
+        this.restId = restId;
+    }
 
 }

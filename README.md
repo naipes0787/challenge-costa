@@ -1,54 +1,28 @@
 # Wolox Challenge
 
-###### Desarrollado por Leandro Costa
+###### Developed by Leandro Costa
 
 
 ___
-**Consideraciones**
-- Se utilizó inglés para la nomenclatura de tablas, clases, etcétera
-- Se utilizó la annotation @Entity para cada parte del modelo, es decir, habrá una tabla por cada objeto del modelo
-- Se agregó un script inicial (_data.sql_) para volver a un estado limpio la base de datos al reiniciar la aplicación (En caso de no precisarse, puede eliminarse)
-- La tabla access_type posee los permisos. 1 = Read, 2 = Write, 3 = Read and Write
-
-
-___
-**Requisitos**
+**Requirements**
 - Maven
-- MySQL
-- Se precisa tener creada la base de datos _wolox_challenge_
-- Se deberá configurar el acceso a la base de datos en el archivo _application.properties_ del directorio resources
+- PostgreSQL (Or Docker)
 
-
-___
-**Iniciar aplicación**
-- Para iniciar ejecutar en el directorio raíz: _mvn spring-boot:run_
-
+In case you use Docker, I recommend to use the postgres:9.6.6-alpine:
+```sh
+$ docker pull postgres:9.6.6-alpine
+$ docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=challenge 
+```
 
 ___
 **Funcionalidades**
 
-La API provee información de usuarios, álbumes, fotos, posts y comentarios con las siguientes urls (Suponiendo que se utiliza desde localhost en el puerto 8080):
+The API provides user, albums, photos, posts and comments information using [JSONPlaceholder](https://jsonplaceholder.typicode.com)
+as the data source. Assuming that we are using localhost:8081 this are the endpoints:
+- localhost:8081/challenge/users
+- localhost:8081/challenge/albums
+- localhost:8081/challenge/photos
+- localhost:8081/challenge/posts
+- localhost:8081/challenge/comments
 
-localhost:8080/api/users
-
-localhost:8080/api/albums
-
-localhost:8080/api/photos
-
-localhost:8080/api/posts
-
-localhost:8080/api/comments
-
-
-Para cada una de ellas, si desea obtenerse información de sólo un registro podrá utilizarse el id como se muestra en el siguiente ejemplo para un usuario de id = 3:
-
-localhost:8080/api/users/3
-
-**Otras funcionalidades:**
-- Obtener las fotos del usuario 3: GET _localhost:8080/api/photosByUserId?userId=3_
-- Obtener los comentarios con el name 'id labore ex et quam laborum':
-GET _localhost:8080/api/filterComments?name=id%20labore%20ex%20et%20quam%20laborum_
-- Obtener los comentarios del usuario 3: GET _localhost:8080/api/filterComments?userId=3_
-- Compartir el álbum 2 con el usuario 4 en modo lectura: POST _localhost:8080/api/shareAlbum?albumId=2&userId=4&accessTypeId=1_
-- Modificar a modo escritura el álbum 2 con el usuario 4: PUT _localhost:8080/api/shareAlbum?albumId=2&userId=4&accessTypeId=2_
-- Obtener usuarios asociados al album 2 en modo escritura: GET _localhost:8080/api/usersByAlbumAndAccessType?albumId=2&accessTypeId=2_
+You can get more information about each one looking at the Swagger documentation: localhost:8081/challenge/swagger-ui.html.
