@@ -2,7 +2,6 @@ package ar.com.wolox.challengecosta.controllers;
 
 import ar.com.wolox.challengecosta.dtos.PostDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.models.Post;
 import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.List;
 import org.springframework.core.ParameterizedTypeReference;
@@ -40,14 +39,13 @@ public class PostController {
      *
      * @param postId The id of the post
      *
-     * @return {@link Post}
+     * @return {@link PostDTO}
      */
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable(value = "id") Long postId) {
+    public PostDTO getPostById(@PathVariable(value = "id") Long postId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            return restTemplate.getForObject((Constants.REST_POSTS_URL + "/" +
-                    postId.toString()), Post.class);
+            return restTemplate.getForObject((Constants.REST_POSTS_URL + "/" + postId), PostDTO.class);
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {

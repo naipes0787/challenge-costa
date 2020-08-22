@@ -1,14 +1,12 @@
 package ar.com.wolox.challengecosta.controllers;
 
+import ar.com.wolox.challengecosta.dtos.AlbumDTO;
 import ar.com.wolox.challengecosta.dtos.PhotoDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.models.Album;
-import ar.com.wolox.challengecosta.models.Photo;
 import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.websocket.server.PathParam;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -16,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -44,14 +43,14 @@ public class PhotoController {
      *
      * @param photoId The id of the photo
      *
-     * @return {@link Photo}
+     * @return {@link PhotoDTO}
      */
     @GetMapping("/{id}")
-    public Photo getPhotoById(@PathVariable(value = "id") Long photoId) {
+    public PhotoDTO getPhotoById(@PathVariable(value = "id") Long photoId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
             return restTemplate.getForObject((Constants.REST_PHOTOS_URL + "/" +
-                    photoId.toString()), Photo.class);
+                    photoId.toString()), PhotoDTO.class);
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
@@ -67,21 +66,21 @@ public class PhotoController {
      *
      * @param userId The id of the user
      *
-     * @return List<Photo>
+     * @return List<PhotoDTO>
      */
-    @GetMapping("/photosByUserId")
-    public List<Photo> getPhotosByUserId(@PathParam("userId") Long userId) {
+    @GetMapping(params = "userId")
+    public List<PhotoDTO> getPhotosByUserId(@RequestParam("userId") Long userId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Album>> responseAlbum = restTemplate.exchange(
-                (Constants.REST_ALBUMS_BY_USER_URL + userId.toString()), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Album>>() {
+        ResponseEntity<List<AlbumDTO>> responseAlbum = restTemplate.exchange(
+                (Constants.REST_ALBUMS_BY_USER_URL + userId), HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<AlbumDTO>>() {
                 });
-        List<Album> albums = responseAlbum.getBody();
-        List<Photo> photos = new ArrayList<>();
+        List<AlbumDTO> albums = responseAlbum.getBody();
+        List<PhotoDTO> photos = new ArrayList<>();
         albums.forEach(album -> {
-            ResponseEntity<List<Photo>> responsePhoto = restTemplate.exchange(
-                    (Constants.REST_PHOTOS_BY_ALBUM_URL + album.getRestId().toString()), HttpMethod.GET,
-                    null, new ParameterizedTypeReference<List<Photo>>() {
+            ResponseEntity<List<PhotoDTO>> responsePhoto = restTemplate.exchange(
+                    (Constants.REST_PHOTOS_BY_ALBUM_URL + album.getId()), HttpMethod.GET,
+                    null, new ParameterizedTypeReference<List<PhotoDTO>>() {
                     });
             photos.addAll(Objects.requireNonNull(responsePhoto.getBody()));
         });

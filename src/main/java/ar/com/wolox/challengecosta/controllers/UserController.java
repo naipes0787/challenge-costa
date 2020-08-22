@@ -2,7 +2,6 @@ package ar.com.wolox.challengecosta.controllers;
 
 import ar.com.wolox.challengecosta.dtos.UserDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.models.User;
 import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.List;
 import org.springframework.core.ParameterizedTypeReference;
@@ -40,14 +39,13 @@ public class UserController {
      *
      * @param userId The id of the user
      *
-     * @return {@link User}
+     * @return {@link UserDTO}
      */
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable(value = "id") Long userId) {
+    public UserDTO getUserById(@PathVariable(value = "id") Long userId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            return restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
-                    userId.toString()), User.class);
+            return restTemplate.getForObject((Constants.REST_USERS_URL + "/" + userId), UserDTO.class);
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {

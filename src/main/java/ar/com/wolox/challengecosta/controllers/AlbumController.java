@@ -2,10 +2,8 @@ package ar.com.wolox.challengecosta.controllers;
 
 import ar.com.wolox.challengecosta.dtos.AlbumDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.models.Album;
 import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -44,11 +43,11 @@ public class AlbumController {
      * @return List<Album>
      */
     @GetMapping("/{id}")
-    public Album getAlbumById(@PathVariable(value = "id") Long albumId) {
+    public AlbumDTO getAlbumById(@PathVariable(value = "id") Long albumId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
             return restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
-                    albumId.toString()), Album.class);
+                    albumId.toString()), AlbumDTO.class);
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
@@ -66,12 +65,12 @@ public class AlbumController {
      *
      * @return List<Album> All the albums from the specific user
      */
-    @GetMapping("/albumsByUserId")
-    public List<Album> getAlbumsByUserId(@PathParam("userId") Long userId) {
+    @GetMapping(params = "userId")
+    public List<AlbumDTO> getAlbumsByUserId(@RequestParam(value = "userId") Long userId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Album>> responseAlbum = restTemplate.exchange(
-                (Constants.REST_ALBUMS_BY_USER_URL + userId.toString()), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Album>>() {
+        ResponseEntity<List<AlbumDTO>> responseAlbum = restTemplate.exchange(
+                (Constants.REST_ALBUMS_BY_USER_URL + userId), HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<AlbumDTO>>() {
                 });
         return responseAlbum.getBody();
     }

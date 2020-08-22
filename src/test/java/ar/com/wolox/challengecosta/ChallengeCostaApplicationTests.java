@@ -5,9 +5,9 @@ import ar.com.wolox.challengecosta.controllers.CommentController;
 import ar.com.wolox.challengecosta.controllers.PhotoController;
 import ar.com.wolox.challengecosta.controllers.PostController;
 import ar.com.wolox.challengecosta.controllers.UserController;
+import ar.com.wolox.challengecosta.dtos.CommentDTO;
+import ar.com.wolox.challengecosta.dtos.PhotoDTO;
 import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.models.Comment;
-import ar.com.wolox.challengecosta.models.Photo;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class ChallengeCostaApplicationTests {
     @Test
     public void testPhotosByUser() {
         PhotoController photoController = new PhotoController();
-        List<Photo> photos = photoController.getPhotosByUserId(1L);
+        List<PhotoDTO> photos = photoController.getPhotosByUserId(1L);
         // Se calculó mediante el servicio externo que hay 500 fotos del usuario 1
         Assert.assertEquals(photos.size(), 500);
     }
@@ -60,7 +60,7 @@ public class ChallengeCostaApplicationTests {
     @Test
     public void testCommentsByUser() {
         CommentController commentController = new CommentController();
-        List<Comment> comment = commentController.getFilteredComment(null, 1L);
+        List<CommentDTO> comment = commentController.getFilteredComment(null, 1L);
         // Se calculó mediante el servicio externo que hay 50 comentarios del usuario 1
         Assert.assertEquals(comment.size(), 50);
     }
