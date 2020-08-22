@@ -53,8 +53,7 @@ public class AlbumUserController {
     @GetMapping("/usersByAlbumAndAccessType")
     public List<User> getUsersByAlbumAndAccessType(@PathParam("albumId") Long albumId,
             @PathParam("accessTypeId") Long accessTypeId) {
-        List<User> users = albumService.getUsersByAlbumAndAccessType(albumId, accessTypeId);
-        return users;
+        return albumService.getUsersByAlbumAndAccessType(albumId, accessTypeId);
     }
 
 }

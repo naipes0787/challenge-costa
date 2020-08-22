@@ -31,8 +31,7 @@ public class PostController {
                 Constants.REST_POSTS_URL, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Post>>() {
                 });
-        List<Post> posts = response.getBody();
-        return posts;
+        return response.getBody();
     }
 
     /**
@@ -46,9 +45,8 @@ public class PostController {
     public Post getPostById(@PathVariable(value = "id") Long postId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Post post = restTemplate.getForObject((Constants.REST_POSTS_URL + "/" +
+            return restTemplate.getForObject((Constants.REST_POSTS_URL + "/" +
                     postId.toString()), Post.class);
-            return post;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {

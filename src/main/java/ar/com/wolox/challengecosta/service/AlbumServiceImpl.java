@@ -50,7 +50,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public Boolean existsAlbumUser(Long albumId, Long userId) {
         return !(Optional.empty().equals(
-                albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId)));
+                albumUserRepository.findByAlbumRestIdAndUserRestId(albumId, userId)));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class AlbumServiceImpl implements AlbumService {
         if (accessType.equals(AccessType.UNKNOWN)) {
             throw new ResourceNotFoundException(AccessType.class.toString(), "id", accessTypeId);
         } else {
-            AlbumUser albumUser = albumUserRepository.findByAlbum_restIdAndUser_restId(albumId, userId)
+            AlbumUser albumUser = albumUserRepository.findByAlbumRestIdAndUserRestId(albumId, userId)
                     .orElseThrow(() -> new ResourceNotFoundException(AlbumUser.class.toString(),
                             "id", (albumId + ", " + userId)));
             albumUser.setAccessType(accessType);

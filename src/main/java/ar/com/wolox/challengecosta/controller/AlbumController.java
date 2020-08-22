@@ -32,8 +32,7 @@ public class AlbumController {
                 Constants.REST_ALBUMS_URL, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Album>>() {
                 });
-        List<Album> albums = response.getBody();
-        return albums;
+        return response.getBody();
     }
 
     /**
@@ -47,9 +46,8 @@ public class AlbumController {
     public Album getAlbumById(@PathVariable(value = "id") Long albumId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Album album = restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
+            return restTemplate.getForObject((Constants.REST_ALBUMS_URL + "/" +
                     albumId.toString()), Album.class);
-            return album;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
@@ -74,8 +72,7 @@ public class AlbumController {
                 (Constants.REST_ALBUMS_BY_USER_URL + userId.toString()), HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Album>>() {
                 });
-        List<Album> albums = responseAlbum.getBody();
-        return albums;
+        return responseAlbum.getBody();
     }
 
 }

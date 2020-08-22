@@ -6,6 +6,7 @@ import ar.com.wolox.challengecosta.model.Post;
 import ar.com.wolox.challengecosta.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.websocket.server.PathParam;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -49,9 +50,8 @@ public class CommentController {
     public Comment getCommentById(@PathVariable(value = "id") Long commentId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Comment comment = restTemplate.getForObject((Constants.REST_COMMENTS_URL + "/" +
+            return restTemplate.getForObject((Constants.REST_COMMENTS_URL + "/" +
                     commentId.toString()), Comment.class);
-            return comment;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
@@ -74,7 +74,7 @@ public class CommentController {
     public List<Comment> getFilteredComment(@PathParam("name") String name,
             @PathParam("userId") Long userId) {
         RestTemplate restTemplate = new RestTemplate();
-        List<Comment> comments = new ArrayList<Comment>();
+        List<Comment> comments = new ArrayList<>();
         if (name != null) {
             ResponseEntity<List<Comment>> responseComments = restTemplate.exchange(
                     (Constants.REST_COMMENTS_BY_NAME_URL + name),
@@ -88,13 +88,13 @@ public class CommentController {
                         new ParameterizedTypeReference<List<Post>>() {
                         });
                 List<Post> posts = responsePosts.getBody();
-                List<Comment> commentsByUser = new ArrayList<Comment>();
+                List<Comment> commentsByUser = new ArrayList<>();
                 posts.forEach(post -> {
                     ResponseEntity<List<Comment>> responseComment = restTemplate.exchange(
                             (Constants.REST_COMMENTS_BY_POST_URL + post.getRestId().toString()), HttpMethod.GET,
                             null, new ParameterizedTypeReference<List<Comment>>() {
                             });
-                    commentsByUser.addAll(responseComment.getBody());
+                    commentsByUser.addAll(Objects.requireNonNull(responseComment.getBody()));
                 });
                 comments = commentsByUser;
             }

@@ -6,6 +6,7 @@ import ar.com.wolox.challengecosta.model.Photo;
 import ar.com.wolox.challengecosta.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.websocket.server.PathParam;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -34,8 +35,7 @@ public class PhotoController {
                 Constants.REST_PHOTOS_URL, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Photo>>() {
                 });
-        List<Photo> photos = response.getBody();
-        return photos;
+        return response.getBody();
     }
 
     /**
@@ -49,9 +49,8 @@ public class PhotoController {
     public Photo getPhotoById(@PathVariable(value = "id") Long photoId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Photo photo = restTemplate.getForObject((Constants.REST_PHOTOS_URL + "/" +
+            return restTemplate.getForObject((Constants.REST_PHOTOS_URL + "/" +
                     photoId.toString()), Photo.class);
-            return photo;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
@@ -77,13 +76,13 @@ public class PhotoController {
                 new ParameterizedTypeReference<List<Album>>() {
                 });
         List<Album> albums = responseAlbum.getBody();
-        List<Photo> photos = new ArrayList<Photo>();
+        List<Photo> photos = new ArrayList<>();
         albums.forEach(album -> {
             ResponseEntity<List<Photo>> responsePhoto = restTemplate.exchange(
                     (Constants.REST_PHOTOS_BY_ALBUM_URL + album.getRestId().toString()), HttpMethod.GET,
                     null, new ParameterizedTypeReference<List<Photo>>() {
                     });
-            photos.addAll(responsePhoto.getBody());
+            photos.addAll(Objects.requireNonNull(responsePhoto.getBody()));
         });
         return photos;
     }

@@ -31,8 +31,7 @@ public class UserController {
                 Constants.REST_USERS_URL, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<User>>() {
                 });
-        List<User> users = response.getBody();
-        return users;
+        return response.getBody();
     }
 
     /**
@@ -46,16 +45,13 @@ public class UserController {
     public User getUserById(@PathVariable(value = "id") Long userId) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            User user = restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
+            return restTemplate.getForObject((Constants.REST_USERS_URL + "/" +
                     userId.toString()), User.class);
-            return user;
         } catch (HttpClientErrorException e) {
             HttpStatus status = e.getStatusCode();
             if (status != HttpStatus.NOT_FOUND) {
-                // Si no es un 404 arrojo la excepción
                 throw e;
             } else {
-                // Si es un 404 muestro un mensaje más entendible
                 throw new ResourceNotFoundException("User", "userId", userId.toString());
             }
         }

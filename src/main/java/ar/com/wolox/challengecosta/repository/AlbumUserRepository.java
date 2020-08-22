@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AlbumUserRepository extends JpaRepository<AlbumUser, Long> {
 
-    Optional<AlbumUser> findByAlbum_restIdAndUser_restId(Long albumId, Long userId);
+    Optional<AlbumUser> findByAlbumRestIdAndUserRestId(Long albumId, Long userId);
 
 }
