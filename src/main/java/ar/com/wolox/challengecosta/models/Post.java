@@ -1,16 +1,19 @@
-package ar.com.wolox.challengecosta.model;
+package ar.com.wolox.challengecosta.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "album")
-public class Album {
+@Table(name = "post")
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +23,15 @@ public class Album {
     @JsonProperty("id")
     private Long restId;
 
-    @JsonProperty("userId")
-    private Long ownerRestId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private User user;
 
     @JsonProperty("title")
     private String title;
+
+    @JsonProperty("body")
+    private String body;
 
     public Long getId() {
         return id;
@@ -42,20 +49,28 @@ public class Album {
         this.title = title;
     }
 
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getRestId() {
         return restId;
     }
 
     public void setRestId(Long restId) {
         this.restId = restId;
-    }
-
-    public Long getOwnerRestId() {
-        return ownerRestId;
-    }
-
-    public void setOwnerRestId(Long ownerRestId) {
-        this.ownerRestId = ownerRestId;
     }
 
 }

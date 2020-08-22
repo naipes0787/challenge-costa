@@ -1,13 +1,13 @@
-package ar.com.wolox.challengecosta.service;
+package ar.com.wolox.challengecosta.services;
 
-import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.model.AccessType;
-import ar.com.wolox.challengecosta.model.Album;
-import ar.com.wolox.challengecosta.model.AlbumUser;
-import ar.com.wolox.challengecosta.model.User;
-import ar.com.wolox.challengecosta.repository.AlbumRepository;
-import ar.com.wolox.challengecosta.repository.AlbumUserRepository;
-import ar.com.wolox.challengecosta.repository.UserRepository;
+import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
+import ar.com.wolox.challengecosta.models.AccessType;
+import ar.com.wolox.challengecosta.models.Album;
+import ar.com.wolox.challengecosta.models.AlbumUser;
+import ar.com.wolox.challengecosta.models.User;
+import ar.com.wolox.challengecosta.repositories.AlbumRepository;
+import ar.com.wolox.challengecosta.repositories.AlbumUserRepository;
+import ar.com.wolox.challengecosta.repositories.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

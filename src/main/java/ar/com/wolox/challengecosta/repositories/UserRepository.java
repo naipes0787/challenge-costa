@@ -1,7 +1,7 @@
-package ar.com.wolox.challengecosta.repository;
+package ar.com.wolox.challengecosta.repositories;
 
-import ar.com.wolox.challengecosta.model.AccessType;
-import ar.com.wolox.challengecosta.model.User;
+import ar.com.wolox.challengecosta.models.AccessType;
+import ar.com.wolox.challengecosta.models.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

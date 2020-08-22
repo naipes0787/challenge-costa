@@ -1,4 +1,4 @@
-package ar.com.wolox.challengecosta.model;
+package ar.com.wolox.challengecosta.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

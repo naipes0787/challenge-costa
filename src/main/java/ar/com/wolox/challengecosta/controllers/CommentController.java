@@ -1,9 +1,9 @@
-package ar.com.wolox.challengecosta.controller;
+package ar.com.wolox.challengecosta.controllers;
 
-import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.model.Comment;
-import ar.com.wolox.challengecosta.model.Post;
-import ar.com.wolox.challengecosta.util.Constants;
+import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
+import ar.com.wolox.challengecosta.models.Comment;
+import ar.com.wolox.challengecosta.models.Post;
+import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

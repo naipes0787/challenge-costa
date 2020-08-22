@@ -1,6 +1,6 @@
-package ar.com.wolox.challengecosta.repository;
+package ar.com.wolox.challengecosta.repositories;
 
-import ar.com.wolox.challengecosta.model.AlbumUser;
+import ar.com.wolox.challengecosta.models.AlbumUser;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package ar.com.wolox.challengecosta.model;
+package ar.com.wolox.challengecosta.models;
 
 /**
  * Enum to specify the different types of access permission

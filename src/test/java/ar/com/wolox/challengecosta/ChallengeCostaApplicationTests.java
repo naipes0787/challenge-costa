@@ -1,13 +1,13 @@
 package ar.com.wolox.challengecosta;
 
-import ar.com.wolox.challengecosta.controller.AlbumController;
-import ar.com.wolox.challengecosta.controller.CommentController;
-import ar.com.wolox.challengecosta.controller.PhotoController;
-import ar.com.wolox.challengecosta.controller.PostController;
-import ar.com.wolox.challengecosta.controller.UserController;
-import ar.com.wolox.challengecosta.exception.ResourceNotFoundException;
-import ar.com.wolox.challengecosta.model.Comment;
-import ar.com.wolox.challengecosta.model.Photo;
+import ar.com.wolox.challengecosta.controllers.AlbumController;
+import ar.com.wolox.challengecosta.controllers.CommentController;
+import ar.com.wolox.challengecosta.controllers.PhotoController;
+import ar.com.wolox.challengecosta.controllers.PostController;
+import ar.com.wolox.challengecosta.controllers.UserController;
+import ar.com.wolox.challengecosta.exceptions.ResourceNotFoundException;
+import ar.com.wolox.challengecosta.models.Comment;
+import ar.com.wolox.challengecosta.models.Photo;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;

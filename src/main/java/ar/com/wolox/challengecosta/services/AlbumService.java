@@ -1,7 +1,7 @@
-package ar.com.wolox.challengecosta.service;
+package ar.com.wolox.challengecosta.services;
 
-import ar.com.wolox.challengecosta.model.Album;
-import ar.com.wolox.challengecosta.model.User;
+import ar.com.wolox.challengecosta.models.Album;
+import ar.com.wolox.challengecosta.models.User;
 import java.util.List;
 
 public interface AlbumService {

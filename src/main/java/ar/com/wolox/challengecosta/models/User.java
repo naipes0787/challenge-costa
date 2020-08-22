@@ -1,19 +1,18 @@
-package ar.com.wolox.challengecosta.model;
+package ar.com.wolox.challengecosta.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,18 +22,14 @@ public class Comment {
     @JsonProperty("id")
     private Long restId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Post post;
-
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("username")
+    private String username;
+
     @JsonProperty("email")
     private String email;
-
-    @JsonProperty("body")
-    private String body;
 
     public Long getId() {
         return id;
@@ -42,22 +37,6 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
@@ -68,12 +47,20 @@ public class Comment {
         this.name = name;
     }
 
-    public Post getPost() {
-        return post;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getRestId() {

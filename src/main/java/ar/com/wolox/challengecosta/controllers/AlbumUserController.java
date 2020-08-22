@@ -1,9 +1,9 @@
-package ar.com.wolox.challengecosta.controller;
+package ar.com.wolox.challengecosta.controllers;
 
-import ar.com.wolox.challengecosta.model.Album;
-import ar.com.wolox.challengecosta.model.User;
-import ar.com.wolox.challengecosta.service.AlbumServiceImpl;
-import ar.com.wolox.challengecosta.util.Constants;
+import ar.com.wolox.challengecosta.models.Album;
+import ar.com.wolox.challengecosta.models.User;
+import ar.com.wolox.challengecosta.services.AlbumServiceImpl;
+import ar.com.wolox.challengecosta.utils.Constants;
 import java.util.List;
 import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;

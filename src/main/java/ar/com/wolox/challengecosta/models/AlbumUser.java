@@ -1,4 +1,4 @@
-package ar.com.wolox.challengecosta.model;
+package ar.com.wolox.challengecosta.models;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
