@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/shared-albums")
 public class AlbumUserController {
 
     @Autowired

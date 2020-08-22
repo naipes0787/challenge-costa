@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     /**

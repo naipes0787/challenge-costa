@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/api/albums")
+@RequestMapping("/albums")
 public class AlbumController {
 
     /**
