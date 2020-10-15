@@ -1,4 +1,4 @@
-# Wolox Challenge
+# Challenge
 
 ###### Developed by Leandro Costa
 
